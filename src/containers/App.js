@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Navbar from 'components/Navbar';
+import ChatInput from 'components/ChatInput';
 // load socket.io
 const socket = require('socket.io-client')();
 
@@ -10,23 +10,21 @@ class App extends Component {
     children: PropTypes.any,
   };
 
-  componentWillMount() {
-    // create a socket connection
-    socket.on('connect', () => {
-      console.log('connected to server');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('server is down!');
+  onMessageSend(name, text) {
+    socket.emit('newMsg', {
+      name,
+      text,
     });
   }
 
   render() {
     return (
       <div className="app">
-        <Navbar />
-        <h1>App containers rendered by default</h1>
-        {this.props.children}
+        <h1>J's Chatting Space</h1>
+        <div className="chat-window">
+          {this.props.children}
+        </div>
+        <ChatInput onMessageSend={::this.onMessageSend} />
       </div>
     );
   }

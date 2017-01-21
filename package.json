@@ -19,7 +19,8 @@
   },
   "keywords": [
     "react",
-    "redux"
+    "redux",
+    "socket.io"
   ],
   "license": "MIT",
   "dependencies": {

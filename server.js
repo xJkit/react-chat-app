@@ -33,9 +33,19 @@ app.get('*', (req, res) => {
 
 const server = http.createServer(app);
 const io = socketIO(server);
-// create socekt events
-io.on('connection', () => {
-  console.log('new user connected');
+// create socket events
+io.on('connection', socket => {
+  // user socket to listen to the front end events
+  console.log('a user connected');
+
+  socket.on('newMsg', msg => {
+    console.log(`name: ${msg.name}`);
+    console.log(`text: ${msg.text}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('a user disconnected');
+  });
 });
 
 
