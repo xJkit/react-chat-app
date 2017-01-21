@@ -1,6 +1,8 @@
 /* eslint no-console: 0 */
-const express = require('express');
+const app = require('express')();
+const http = require('http');
 const path = require('path');
+const socketIO = require('socket.io');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -10,7 +12,6 @@ const ADDR = 'localhost';
 const PORT = process.env.PORT || 3000;
 
 //
-const app = express();
 const compiler = webpack(webpackConfig);
 
 // app.use(express.static('public/dist'));
@@ -23,12 +24,22 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
+// Add socket.io
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, ADDR, (err) => {
+
+const server = http.createServer(app);
+const io = socketIO(server);
+// create socekt events
+io.on('connection', () => {
+  console.log('new user connected');
+});
+
+
+server.listen(PORT, ADDR, (err) => {
   if (err) {
     console.log(err);
     return;
