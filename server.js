@@ -3,6 +3,8 @@ const app = require('express')();
 const http = require('http');
 const path = require('path');
 const socketIO = require('socket.io');
+const server = http.createServer(app);
+const io = socketIO(server);
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -30,17 +32,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
-
-const server = http.createServer(app);
-const io = socketIO(server);
 // create socket events
 io.on('connection', socket => {
   // user socket to listen to the front end events
   console.log('a user connected');
 
   socket.on('newMsg', msg => {
-    console.log(`name: ${msg.name}`);
-    console.log(`text: ${msg.text}`);
+    // console.log(`name: ${msg.name}`);
+    // console.log(`text: ${msg.text}`);
+    console.log(`got messages, ${msg.name}: ${msg.text}`);
+    io.emit('broadcast', msg);
   });
 
   socket.on('disconnect', () => {
