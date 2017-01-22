@@ -14,23 +14,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      msg: [],
+      newMsg: {},
     };
   }
 
-  onMessageSend(name, text) {
-    socket.emit('newMsg', {
-      name,
-      text,
+  componentWillMount() {
+    socket.on('newMsg', msg => {
+      console.log('git new messages:', msg);
+      this.setState({
+        newMsg: msg,
+      });
     });
   }
 
-  onMessageReceive(msg) {
-    this.setState({
-      msg: [
-        ...this.state.msg,
-        msg,
-      ],
+  onMessageSend(name, text) {
+    socket.emit('createMsg', {
+      name,
+      text,
     });
   }
 
@@ -41,7 +41,7 @@ class App extends Component {
         <div className="chat-window">
           {this.props.children}
         </div>
-        <ChatWindow Messages={this.state.msg} />
+        <ChatWindow Messages={this.state.newMsg} />
         <ChatInput onMessageSend={::this.onMessageSend} />
       </div>
     );

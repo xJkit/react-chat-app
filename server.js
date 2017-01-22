@@ -37,11 +37,15 @@ io.on('connection', socket => {
   // user socket to listen to the front end events
   console.log('a user connected');
 
-  socket.on('newMsg', msg => {
+  socket.on('createMsg', msg => {
     // console.log(`name: ${msg.name}`);
     // console.log(`text: ${msg.text}`);
     console.log(`got messages, ${msg.name}: ${msg.text}`);
-    io.emit('broadcast', msg);
+    socket.emit('newMsg', {
+      name: msg.name,
+      text: msg.text,
+      createdAt: new Date(),
+    });
   });
 
   socket.on('disconnect', () => {
