@@ -16,6 +16,7 @@ import routes from 'routes';
 
 // Custom CSS
 import 'styles/styles.scss';
+import 'rodal/lib/rodal.css';
 
 render(
   <Provider store={store}>
