@@ -10,6 +10,12 @@ class Welcome extends Component {
     };
   }
 
+  onIdSubmit(evt) {
+    evt.preventDefault();
+    console.log(`your name Id: ${this.refs.nameId.value}`);
+    this.hideModal();
+  }
+
   showModal() {
     this.setState({
       visible: true,
@@ -27,10 +33,15 @@ class Welcome extends Component {
       <Rodal
         visible={this.state.visible}
         onClose={::this.hideModal}
+        width={600}
+        height={175}
       >
-        <div className="welcome-window">
-          <h1>請輸入 ID:</h1>
-        </div>
+        <form className="welcome-window" onSubmit={::this.onIdSubmit}>
+          <span>請輸入 ID:</span>
+          <input type="text" ref="nameId" />
+          <button type="submit">確定</button>
+          <button type="button" onClick={::this.hideModal}>取消</button>
+        </form>
       </Rodal>
     );
   }
