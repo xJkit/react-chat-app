@@ -1,7 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Rodal from 'rodal';
 
 class Welcome extends Component {
+
+  static propTypes = {
+    router: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -23,6 +27,8 @@ class Welcome extends Component {
   }
 
   hideModal() {
+    // debugger;
+    this.props.router.push('/chatroom');
     this.setState({
       visible: false,
     });
@@ -40,7 +46,9 @@ class Welcome extends Component {
           <span>請輸入 ID:</span>
           <input type="text" ref="nameId" />
           <button type="submit">確定</button>
-          <button type="button" onClick={::this.hideModal}>取消</button>
+          <button type="button" onClick={::this.hideModal}>
+            取消
+          </button>
         </form>
       </Rodal>
     );
