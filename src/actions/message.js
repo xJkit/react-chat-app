@@ -1,7 +1,12 @@
 import * as Types from './ActionTypes';
 
-export const sendNewMessage = (user, message) => ({
-  type: Types.SEND_NEW_MESSAGE,
-  user,
+export const sendMyMessage = message => ({
+  type: Types.MY_MESSAGE,
+  message,
+});
+
+export const sendOtherMessage = (userId, message) => ({
+  type: Types.OTHER_MESSAGE,
+  userId,
   message,
 });

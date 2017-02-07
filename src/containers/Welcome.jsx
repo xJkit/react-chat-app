@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Rodal from 'rodal';
 
 class Welcome extends Component {
 
   static propTypes = {
     router: PropTypes.object.isRequired,
+    addUser: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -16,7 +18,8 @@ class Welcome extends Component {
 
   onIdSubmit(evt) {
     evt.preventDefault();
-    console.log(`your name Id: ${this.refs.nameId.value}`);
+    const nameId = this.refs.nameId.value;
+    console.log(`your name Id: ${nameId}`);
     this.hideModal();
   }
 
@@ -27,7 +30,6 @@ class Welcome extends Component {
   }
 
   hideModal() {
-    // debugger;
     this.props.router.push('/chatroom');
     this.setState({
       visible: false,
@@ -55,4 +57,4 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+export default connect(() => ({}))(Welcome);

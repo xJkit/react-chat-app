@@ -9,4 +9,7 @@
 
 // export const SEND_NEW_MESSAGE = createTypes('SEND_NEW_MESSAGE');
 export const ADD_NEW_USER = 'ADD_NEW_USER';
-export const SEND_NEW_MESSAGE = 'SEND_NEW_MESSAGE';
+export const TOTAL_USER_NUMBER = 'TOTAL_USER_NUMBER';
+export const MY_MESSAGE = 'MY_MESSAGE';
+export const OTHER_MESSAGE = 'OTHER_MESSAGE';
+export const USER_LOG_IN = 'USER_LOG_IN';

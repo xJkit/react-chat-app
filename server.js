@@ -33,23 +33,19 @@ app.get('*', (req, res) => {
 });
 
 // create socket events
-io.on('connection', socket => {
+const chatNsp = io.of('/chatroom');
+let users = 0;
+chatNsp.on('connection', socket => {
   // user socket to listen to the front end events
-  console.log('a user connected');
-
-  socket.on('createMsg', msg => {
-    // console.log(`name: ${msg.name}`);
-    // console.log(`text: ${msg.text}`);
-    console.log(`got messages, ${msg.name}: ${msg.text}`);
-    socket.emit('newMsg', {
-      name: msg.name,
-      text: msg.text,
-      createdAt: new Date(),
-    });
-  });
+  console.log(`new user connected to the server with ${users} online`);
+  users ++;
+  socket.emit('welcome', '歡迎光臨');
+  socket.broadcast.emit('onlineUsers', users);
 
   socket.on('disconnect', () => {
     console.log('a user disconnected');
+    users --;
+    socket.broadcast.emit('onlineUsers', users);
   });
 });
 
